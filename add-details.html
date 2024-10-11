@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url('https://your-image-url.com/your-image.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+        .container {
+            width: 60%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #009688;
+            margin-bottom: 5px;
+        }
+        h2 {
+            color: #00796b;
+            margin-top: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input, button, select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #009688;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #00796b;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 3px; /* Adds space between buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Expense Tracker</h1>
+        <h2>Add Details</h2>
+        <form id="expense-form">
+            <input type="text" id="expense-name" placeholder="Expense Name" required>
+            <select id="expense-category" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="food">Food</option>
+                <option value="transport">Transport</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="others">Others</option>
+            </select>
+            <input type="date" id="expense-date" required>
+            <input type="number" id="expense-amount" placeholder="Amount" required>
+            <button type="submit">Add Expense</button>
+        </form>
+        <div class="button-group">
+            <button onclick="showExpenses()">Show My List</button>
+            <button onclick="redirectToLogin()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('expense-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('expense-name').value;
+            const category = document.getElementById('expense-category').value;
+            const date = document.getElementById('expense-date').value;
+            const amount = document.getElementById('expense-amount').value;
+
+            if (name && category && date && amount) {
+                let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+                expenses.push({ name, category, date, amount });
+                localStorage.setItem('expenses', JSON.stringify(expenses));
+
+                document.getElementById('expense-name').value = '';
+                document.getElementById('expense-category').value = '';
+                document.getElementById('expense-date').value = '';
+                document.getElementById('expense-amount').value = '';
+            }
+        });
+
+        function showExpenses() {
+            window.location.href = 'expenses.html';
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
